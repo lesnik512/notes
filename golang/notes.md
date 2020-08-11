@@ -10,6 +10,17 @@ Go initialize variables with some zero values:
 
 Go has "black hole" where you can assign unused variable:
 
-'''go
+```go
 r, _ := some_func_with_two_return_values()
-'''
+```
+
+## Constants
+
+- constants can be untyped, which means they be converted in place like literals
+- iota - constant generator for ordered constants
+
+## Other
+
+- If you can assign sth than you can compare with it
+- Incdec statement cannot be used as expression like in C
+- You can use boolean-expressions in switch statement
