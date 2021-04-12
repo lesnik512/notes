@@ -77,3 +77,15 @@ C.mro()
 #[__main__.C, __main__.A, __main__.D, __main__.B, object]
 ```
 
+## Access item in multilevel `dict`
+
+```python
+from functools import reduce
+from operator import getitem
+
+d = {'a': {'b': {'c': 13}}}
+path = 'a.b.c'
+reduce(getitem, path.split('.'), d)
+# 13
+```
+
