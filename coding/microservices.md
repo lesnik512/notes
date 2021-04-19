@@ -12,3 +12,10 @@ A system that is not tolerant to network partitions can achieve data consistency
 
 In principle the consistency property of transaction systems as defined in the ACID properties (atomicity, consistency, isolation, durability) is a different kind of consistency guarantee. In ACID, consistency relates to the guarantee that when a transaction is finished the database is in a consistent state; for example, when transferring money from one account to another the total amount held in both accounts should not change. In ACID-based systems, this kind of consistency is often the responsibility of the developer writing the transaction but can be assisted by the database managing integrity constraints.
 
+## Service Mesh
+
+We have two services, service A that wants to call service B, and it can be in any language. Consider that this is our application workload. A service mesh uses sidecar controllers and injects a proxy next to our service. You will end up with two containers in the pod. The proxy is a transparent one, and your application is completely unaware that there is a proxy - that is intercepting all incoming and outgoing traffic. Furthermore, the proxy also acts as a data firewall
+
+## Notes
+
+- If you find yourself repeatedly changing two services together, that's a sign that they should be merged

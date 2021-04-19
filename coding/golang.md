@@ -1,6 +1,6 @@
 ## Zero values
 
-Go initialize variables with some zero values:
+Go initialize variables with zero values:
 
 - number types with 0
 - boolean with false

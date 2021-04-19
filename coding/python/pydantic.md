@@ -40,3 +40,9 @@ class StaticFoobarModel(BaseModel):
     foo: str
     bar: int = 123
 ```
+
+
+## Posts:
+
+- [Pydantic, two-way mapping](https://shiriev.ru/pydantic-two-way-mapping/)
+- [Pydantic, preventing type coercion in Union type](https://shiriev.ru/pydantic-prevent-type-coercion-in-union/)
