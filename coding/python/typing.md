@@ -70,6 +70,30 @@ def len(obj: Sized) -> int:
     return obj.__len__()
 ```
 
+## Function overloading
+
+```python
+from typing import Union, overload
+
+# ignored at runtime.
+@overload
+def mouse_event(x1: int, y1: int) -> ClickEvent: ...
+@overload
+def mouse_event(x1: int, y1: int, x2: int, y2: int) -> DragEvent: ...
+
+# The actual *implementation*
+def mouse_event(x1: int,
+                y1: int,
+                x2: Optional[int] = None,
+                y2: Optional[int] = None) -> Union[ClickEvent, DragEvent]:
+    if x2 is None and y2 is None:
+        return ClickEvent(x1, y1)
+    elif x2 is not None and y2 is not None:
+        return DragEvent(x1, y1, x2, y2)
+    else:
+        raise TypeError("Bad arguments")
+```
+
 ## Sources:
 
 - [Python Type Checking (Guide)](https://realpython.com/python-type-checking/)
