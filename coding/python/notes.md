@@ -63,3 +63,27 @@ c.__dict__['d'] = 1
 c.d
 # get <C object at ...> <class 'C'>
 ```
+
+# types.DynamicClassAttribute
+
+[types.DynamicClassAttribute](https://docs.python.org/3/library/types.html#types.DynamicClassAttribute) is a decorator that allows having a `@property` that behaves differently when it's called from the class and when from the instance.
+
+```python
+from types import DynamicClassAttribute
+
+class Meta(type):
+    @property
+    def hello(cls):
+        return f'hello from Meta ({cls})'
+
+class C(metaclass=Meta):
+    @DynamicClassAttribute
+    def hello(self):
+        return f'hello from C ({self})'
+
+C.hello
+# "hello from Meta (<class '__main__.C'>)"
+
+C().hello
+# 'hello from C (<__main__.C object ...)'
+```
