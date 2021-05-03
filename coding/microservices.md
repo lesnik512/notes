@@ -28,5 +28,5 @@ Agregation of services in several gateway services. Each for different platform:
 ## Notes
 - If you find yourself repeatedly changing two services together, that's a sign that they should be merged
 - Вead letter queue - a separate queue where messages got sent if they failedabd ran out of retries
-- Postel’s Law (robustness principle): “Be conservative in what you do, be liberal in what you accept from others.”
+- Postel’s Law (robustness principle): “Be conservative in what you do, be liberal in what you accept from others.” Be a tolerant reader
 - Prefer choreography over orchestration.
