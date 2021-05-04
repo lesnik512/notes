@@ -43,3 +43,26 @@ class Person(object):
     def name(self):
         return data_source.get_name()
 ```
+
+## Global Mock
+
+```python
+@pytest.fixture(autouse=True)
+def disable_network_calls(monkeypatch):
+    def stunted_get():
+        raise RuntimeError("Network access not allowed during testing!")
+    monkeypatch.setattr(requests, "get", lambda *args, **kwargs: stunted_get())
+```
+
+## Running options
+
+`pytest -m database_access` - run tests marked by `@pytest.mark.database_access`
+`pytest -m "not database_access"` - run all tests except for `database_access`
+
+```shell
+$ pytest --durations=3
+3.03s call     test_code.py::test_request_read_timeout
+1.07s call     test_code.py::test_request_connection_timeout
+0.57s call     test_code.py::test_database_read
+======================== 7 passed in 10.06s ==============================
+```

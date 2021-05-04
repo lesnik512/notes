@@ -136,6 +136,25 @@ C.m.pi
 # 3.141592653589793
 ```
 
+# dict as `__slots__`
+
+`__slots__` can be used to save memory. You can use any iterable as `__slots__` value, including `dict`. And starting from Python 3.8, you can use `dict` to specify docstrings for slotted attributes `__slots__`:
+
+```python
+class Channel:
+  "Telegram channel"
+  __slots__ = {
+    'slug': 'short name, without @',
+    'name': 'user-friendly name',
+  }
+  def __init__(self, slug, name):
+    self.slug = slug
+    self.name = name
+
+inspect.getdoc(Channel.name)
+# 'user-friendly name'
+```
+
 # Snippets
 
 ## Call a function until a sentinel value

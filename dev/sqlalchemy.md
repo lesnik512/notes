@@ -1,33 +1,4 @@
-# Snippets
-
-```python
->>> from sqlalchemy import select, bindparam
->>> scalar_subquery = (
-...     select(user_table.c.id).
-...     where(user_table.c.name==bindparam('username')).
-...     scalar_subquery()
-... )
-
->>> with engine.connect() as conn:
-...     result = conn.execute(
-...         insert(address_table).values(user_id=scalar_subquery),
-...         [
-...             {"username": 'spongebob', "email_address": "spongebob@sqlalchemy.org"},
-...             {"username": 'sandy', "email_address": "sandy@sqlalchemy.org"},
-...             {"username": 'sandy', "email_address": "sandy@squirrelpower.org"},
-...         ]
-...     )
-...     conn.commit()
-```
-```sql
-BEGIN (implicit)
-INSERT INTO address (user_id, email_address) VALUES ((SELECT user_account.id
-FROM user_account
-WHERE user_account.name = ?), ?)
-[...] (('spongebob', 'spongebob@sqlalchemy.org'), ('sandy', 'sandy@sqlalchemy.org'),
-('sandy', 'sandy@squirrelpower.org'))
-COMMIT
-```
+# Code Snippets
 
 ## INSERT…FROM SELECT
 
@@ -116,6 +87,29 @@ HAVING count(address.id) > ?
 SELECT user_account_1.name, user_account_2.name AS name_1
 FROM user_account AS user_account_1
 JOIN user_account AS user_account_2 ON user_account_1.id > user_account_2.id
+```
+
+## EXISTS subqueries
+
+```python
+>>> subq = (
+...     select(address_table.c.id).
+...     where(user_table.c.id == address_table.c.user_id)
+... ).exists()
+>>> with engine.connect() as conn:
+...     result = conn.execute(
+...         select(user_table.c.name).where(~subq)
+...     )
+...     print(result.all())
+```
+```sql
+BEGIN (implicit)
+SELECT user_account.name
+FROM user_account
+WHERE NOT (EXISTS (SELECT address.id
+FROM address
+WHERE user_account.id = address.user_id))
+[...] ()
 ```
 
 # Notes

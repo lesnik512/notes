@@ -9,7 +9,6 @@ mkdir -p  # recursive creating of dirs
 ### Working with files
 ```bash
 cat > 1.txt # create file and write data in it (to stop press ctrl+D)
-tail -f     # update output if file is changed
 ```
 ### Control operators
 ```bash

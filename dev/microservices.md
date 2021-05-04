@@ -13,9 +13,6 @@ In principle the consistency property of transaction systems as defined in the A
 ## Service Mesh
 We have two services, service A that wants to call service B, and it can be in any language. Consider that this is our application workload. A service mesh uses sidecar controllers and injects a proxy next to our service. You will end up with two containers in the pod. The proxy is a transparent one, and your application is completely unaware that there is a proxy - that is intercepting all incoming and outgoing traffic. Furthermore, the proxy also acts as a data firewall
 
-## Semantic versioning
-Semantic versioning is a specification that allows just that. With semantic versioning, each version number is in the form MAJOR.MINOR.PATCH. When the MAJOR number increments, it means that backward incompatible changes have been made. When MINOR increments, new functionality has been added that should be backward compatible. Finally, a change to PATCH states that bug fixes have been made to existing functionality.
-
 ## Backends for Frontends
 Agregation of services in several gateway services. Each for different platform: mobile, web for clients, admin panel, etc. These BFFs should only contain behavior specific to delivering a particular user experience.
 
