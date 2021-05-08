@@ -40,3 +40,15 @@ async def read_items(x_token: Optional[List[str]] = Header(None)):
 async def read_item_public_data(item_id: str):
     return items[item_id]
 ```
+
+## Union response model
+
+```python
+@app.get("/items/{item_id}", response_model=Union[PlaneItem, CarItem])
+async def read_item(item_id: str):
+    return items[item_id]
+```
+
+# Notes
+
+- register an exception handler for Starlette's HTTPException

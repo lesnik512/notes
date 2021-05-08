@@ -112,6 +112,33 @@ WHERE user_account.id = address.user_id))
 [...] ()
 ```
 
+## UPDATE many
+
+```python
+>>> from sqlalchemy import bindparam
+>>> stmt = (
+...   update(user_table).
+...   where(user_table.c.name == bindparam('oldname')).
+...   values(name=bindparam('newname'))
+... )
+>>> with engine.begin() as conn:
+...   conn.execute(
+...       stmt,
+...       [
+...          {'oldname':'jack', 'newname':'ed'},
+...          {'oldname':'wendy', 'newname':'mary'},
+...          {'oldname':'jim', 'newname':'jake'},
+...       ]
+...   )
+```
+```sql
+BEGIN (implicit)
+UPDATE user_account SET name=? WHERE user_account.name = ?
+[...] (('ed', 'jack'), ('mary', 'wendy'), ('jake', 'jim'))
+<sqlalchemy.engine.cursor.CursorResult object at 0x...>
+COMMIT
+```
+
 # Notes
 
 There is internal support for the psycopg2 dialect to INSERT many rows at once and also support RETURNING, which is leveraged by the SQLAlchemy ORM. However this feature has not been generalized to all dialects and is not yet part of SQLAlchemy’s regular API.
