@@ -139,6 +139,57 @@ UPDATE user_account SET name=? WHERE user_account.name = ?
 COMMIT
 ```
 
+## EXISTS forms: has() / any()
+
+```python
+>>> stmt = (
+...   select(User.fullname).
+...   where(User.addresses.any(Address.email_address == 'pearl.krabs@gmail.com'))
+... )
+>>> session.execute(stmt).all()
+```
+```sql
+SELECT user_account.fullname
+FROM user_account
+WHERE EXISTS (SELECT 1
+FROM address
+WHERE user_account.id = address.user_id AND address.email_address = ?)
+[...] ('pearl.krabs@gmail.com',)
+```
+---
+```python
+>>> stmt = (
+...   select(User.fullname).
+...   where(~User.addresses.any())
+... )
+>>> session.execute(stmt).all()
+```
+```sql
+SELECT user_account.fullname
+FROM user_account
+WHERE NOT (EXISTS (SELECT 1
+FROM address
+WHERE user_account.id = address.user_id))
+[...] ()
+```
+---
+```python
+>>> stmt = (
+...   select(Address.email_address).
+...   where(Address.user.has(User.name=="pkrabs"))
+... )
+>>> session.execute(stmt).all()
+```
+```sql
+SELECT address.email_address
+FROM address
+WHERE EXISTS (SELECT 1
+FROM user_account
+WHERE user_account.id = address.user_id AND user_account.name = ?)
+[...] ('pkrabs',)
+[('pearl.krabs@gmail.com',), ('pearl@aol.com',)]
+```
+
 # Notes
 
 There is internal support for the psycopg2 dialect to INSERT many rows at once and also support RETURNING, which is leveraged by the SQLAlchemy ORM. However this feature has not been generalized to all dialects and is not yet part of SQLAlchemy’s regular API.
