@@ -190,6 +190,17 @@ WHERE user_account.id = address.user_id AND user_account.name = ?)
 [('pearl.krabs@gmail.com',), ('pearl@aol.com',)]
 ```
 
+## [Using Server Side Cursors (a.k.a. stream results) with ORM](https://docs.sqlalchemy.org/en/14/core/connections.html#using-server-side-cursors-a-k-a-stream-results)
+```python
+with orm.Session(engine) as session:
+    result = session.execute(
+        select(User).order_by(User_id).execution_options(stream_results=True),
+    )
+    for partition in result.partitions(100):
+        _process_rows(partition)
+```
+
+
 # Notes
 
 There is internal support for the psycopg2 dialect to INSERT many rows at once and also support RETURNING, which is leveraged by the SQLAlchemy ORM. However this feature has not been generalized to all dialects and is not yet part of SQLAlchemy’s regular API.
