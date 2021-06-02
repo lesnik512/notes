@@ -6,10 +6,6 @@
 #
 anyio==2.2.0
     # via jupyter-server
-appnope==0.1.2
-    # via
-    #   ipykernel
-    #   ipython
 argon2-cffi==20.1.0
     # via
     #   jupyter-server
@@ -199,7 +195,7 @@ traitlets==5.0.5
     #   nbconvert
     #   nbformat
     #   notebook
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 wcwidth==0.2.5
     # via prompt-toolkit
