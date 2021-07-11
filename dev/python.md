@@ -1,67 +1,56 @@
-# `__class_getitem__`
+# 1. `collections` package
 
-[PEP-560](https://www.python.org/dev/peps/pep-0560/) (landed in Python 3.7) introduced a new magic method `__class_getitem__`. it is the same as `__getitem__` but for not instancinated class. The main motivation is easier type annotation support for generic collections like `List[int]` or `Type[Dict[str, int]]`:
+## `Counter`:
+* [Multiset](https://en.wikipedia.org/wiki/Multiset) realization
+* Supports set and arithmetic operations
+* Return elements sorted by value: `a.most_common(3)` or `a.most_common()`
+* Counters can be merged: `a + b` or `a.update(b)`
+* Negative values are dropped
+
+
+## `Chainmap`
+* dict-like class for creating a single view of multiple mappings
 
 ```python
-class MyList:
-  def __getitem__(self, index):
-    return index + 1
-
-  def __class_getitem__(cls, item):
-    return f"{cls.__name__}[{item.__name__}]"
-
-MyList()[1]
-# 2
-
-MyList[int]
-# 'MyList[int]'
+from collections import ChainMap
+a = {'key': 'a'}
+b = {'key': 'b'}
+d = ChainMap(b, a)
+d['key']
+# 'b'
 ```
 
-# data and non-data descriptors
 
-[Descriptors](https://docs.python.org/3/howto/descriptor.html) are special class attributes with a custom behavior on attribute get, set, or delete. If an object defines `__set__` or `__delete__`, it is considered a data descriptor. Descriptors that only define `__get__` are called non-data descriptors. The difference is that non-data descriptors are called only if the attribute isn't presented in `__dict__` of the instance.
+# 2. "dunder"-methods
 
-### Non-data descriptor:
+## class attribute
+`__class_getitem__` - `__getitem__` for class: `MyList[int]`.
 
-```python
-class D:
-  def __get__(self, obj, owner):
-    print('get', obj, owner)
 
-class C:
-    d = D()
+## data and non-data descriptors
+If an object defines `__set__` or `__delete__`, it is considered a data descriptor. Descriptors that only define `__get__` are called non-data descriptors. The difference is that non-data descriptors are called only if the attribute isn't presented in `__dict__` of the instance.
 
-c = C()
-c.d
-# get <C object at ...> <class 'C'>
+## hashable
+To make a class hashable, it has to implement both the `__hash__` and  `__eq__`
+- The hash of an object must never change during its lifetime
+- Hashable objects which compare equal must have the same hash value (and vice versa)
 
-# updating __dict__ shadows the descriptor
-c.__dict__['d'] = 1
-c.d
-# 1
-```
-
-### Data descriptor:
+# class constructor
+`__init_subclass__`. It is called on subclass creation and accepts the class and keyword arguments passed next to base classes. Let's see an example:
 
 ```python
-class D:
-  def __get__(self, obj, owner):
-    print('get', obj, owner)
+speakers = {}
+class Speaker:
+  # `name` is a custom argument
+  def __init_subclass__(cls, name=None):
+    if name is None:
+      name = cls.__name__
+    speakers[name] = cls
 
-  def __set__(self, obj, owner):
-    print('set', obj, owner)
-
-class C:
-    d = D()
-
-c = C()
-c.d
-# get <C object at ...> <class 'C'>
-
-# updating __dict__ doesn't shadow the descriptor
-c.__dict__['d'] = 1
-c.d
-# get <C object at ...> <class 'C'>
+class Guido(Speaker): pass
+class Beazley(Speaker, name='David Beazley'): pass
+speakers
+# {'Guido': __main__.Guido, 'David Beazley': __main__.Beazley}
 ```
 
 # types.DynamicClassAttribute
@@ -86,28 +75,6 @@ C.hello
 
 C().hello
 # 'hello from C (<__main__.C object ...)'
-```
-
-# `__init_subclass__` (PEP-487)
-
-
-Python 3.6 introduced a few hooks to simplify things that could be done before only with metaclasses. Thanks to [PEP-487](https://www.python.org/dev/peps/pep-0487/). The most useful such hook is `__init_subclass__`. It is called on subclass creation and accepts the class and keyword arguments passed next to base classes. Let's see an example:
-
-```python
-speakers = {}
-
-class Speaker:
-  # `name` is a custom argument
-  def __init_subclass__(cls, name=None):
-    if name is None:
-      name = cls.__name__
-    speakers[name] = cls
-
-class Guido(Speaker): pass
-class Beazley(Speaker, name='David Beazley'): pass
-
-speakers
-# {'Guido': __main__.Guido, 'David Beazley': __main__.Beazley}
 ```
 
 # `__prepare__`
@@ -158,8 +125,6 @@ inspect.getdoc(Channel.name)
 # Snippets
 
 ## Call a function until a sentinel value
-
-
 ```python
 from functools import partial
 blocks = []
