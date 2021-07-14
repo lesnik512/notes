@@ -17,3 +17,5 @@ r, _ := some_func_with_two_return_values()
 ## Other
 - If you can assign sth than you can compare with it
 - Incdec statement cannot be used as expression like in C
+- on channel closing `select case` is triggered
+- channel closing is not blocking, so it can be used instead of writing
