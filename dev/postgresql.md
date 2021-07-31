@@ -35,4 +35,4 @@ FROM
 
 ## Tips
 - use CREATE INDEX CONCURRENTLY to add an index on a production database in the background and not hold a lock on your table. The limitation to creating indexes concurrently is they can typically take 2-3 times longer  to create and can’t be run within a transaction.
-- there is no reason to limit `varchar` type, better to use check constraint or validation on backend
+- there is no reason to limit `varchar` type, better to use check constraint or validation on backend [[source](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Don.27t_use_varchar.28n.29_by_default)]

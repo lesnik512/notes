@@ -213,3 +213,7 @@ reduce(getitem, path.split('.'), d)
 # 13
 ```
 
+## Links
+- About string type [[ru](https://habr.com/ru/post/480324/)]
+- About `dict` [[ru](https://habr.com/ru/post/432996/)]
+- About `int` [[ru](https://habr.com/ru/post/455114/)]
