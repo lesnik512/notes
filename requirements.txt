@@ -6,10 +6,6 @@
 #
 anyio==3.3.0
     # via jupyter-server
-appnope==0.1.2
-    # via
-    #   ipykernel
-    #   ipython
 argon2-cffi==21.1.0
     # via
     #   jupyter-server
@@ -45,16 +41,16 @@ idna==3.2
     #   requests
 ipykernel==6.3.1
     # via notebook
+ipython==7.31.1
+    # via
+    #   ipykernel
+    #   jupyterlab
 ipython-genutils==0.2.0
     # via
     #   ipykernel
     #   jupyter-server
     #   nbformat
     #   notebook
-ipython==7.27.0
-    # via
-    #   ipykernel
-    #   jupyterlab
 jedi==0.18.0
     # via ipython
 jinja2==3.0.1
@@ -89,12 +85,12 @@ jupyter-server==1.10.2
     #   jupyterlab
     #   jupyterlab-server
     #   nbclassic
+jupyterlab==3.1.10
+    # via -r requirements.in
 jupyterlab-pygments==0.1.2
     # via nbconvert
 jupyterlab-server==2.7.2
     # via jupyterlab
-jupyterlab==3.1.10
-    # via -r requirements.in
 markupsafe==2.0.1
     # via jinja2
 matplotlib-inline==0.1.2
@@ -166,12 +162,12 @@ pyzmq==22.2.1
     #   jupyter-client
     #   jupyter-server
     #   notebook
-requests-unixsocket==0.2.0
-    # via jupyter-server
 requests==2.26.0
     # via
     #   jupyterlab-server
     #   requests-unixsocket
+requests-unixsocket==0.2.0
+    # via jupyter-server
 send2trash==1.8.0
     # via
     #   jupyter-server
