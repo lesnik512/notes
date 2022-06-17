@@ -6,10 +6,6 @@
 #
 anyio==3.5.0
     # via jupyter-server
-appnope==0.1.2
-    # via
-    #   ipykernel
-    #   ipython
 argon2-cffi==21.3.0
     # via
     #   jupyter-server
@@ -130,7 +126,7 @@ nest-asyncio==1.5.4
     #   jupyter-client
     #   nbclient
     #   notebook
-notebook==6.4.10
+notebook==6.4.12
     # via nbclassic
 notebook-shim==0.1.0
     # via nbclassic
