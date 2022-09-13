@@ -1,4 +1,4 @@
-## New requred field
+## New required field
 
 ```python
 op.add_column('reservation_goals', sa.Column('is_work', sa.Boolean(), nullable=True))
