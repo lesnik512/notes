@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "notes"
+version = "0"
+description = "notes"
+authors = ["Artur Shiriev <me@shiriev.ru>"]
+maintainers = ["Artur Shiriev <me@shiriev.ru>"]
+license = "Proprietary"
+
+
+[tool.poetry.dependencies]
+# main
+python = ">=3.8,<4.0"
+jupyterlab = "*"
+
+
+[build-system]
+requires = ["poetry-core^1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry.core.masonry.api"
