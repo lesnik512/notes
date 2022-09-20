@@ -15,7 +15,7 @@
 
 ### Additional info
 
-- status 401 Unauthorized must be accompanied by a header WWW-Authenticate and therefor can be used only with HTTP-authentification; in all other cases 403 Forbidden should be used;
+- status 401 Unauthorized must be accompanied by a header WWW-Authenticate and therefore can be used only with HTTP-authentification; in all other cases 403 Forbidden should be used;
 
 ## [Capability URLs](https://w3ctag.github.io/capability-urls/)
 

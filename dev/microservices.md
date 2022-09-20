@@ -1,14 +1,24 @@
-## Team Topologies:
-1. A stream-aligned team owns and runs a deliverable piece of work and don’t disband after a release
-2. An enabling team supports the work of other teams with a consulting engagement model. For example, an enabling architecture team.
-3. A Complicated-Subsystem team works on a domain or on subject matter that is difficult to understand.
-4. A platform team provides support to the rest of the organization and deliver a self-service enablement experience to their users
+## Definition of Done
 
+1. Логгирование в stdout - обязательно
+2. readiness probe - обязательно. Сообщает, что сервис готов к приему трафика. Если проба не проходит - pod исключается из балансировки.
+3. liveness probe - при необходимости. Сообщает что сервис работает. Использовать если само приложение может перейти в нерабочее состояние. Если проба не проходит - контейнер перезапускается.
+4. Обработка SIGTERM - при необходимости. Если есть активные сессии которые нельзя терять.
+5. endpoint /metrics - обязательно. Для сбора метрик на базе Prometheus.
 
-##Patterns
-### Saga
-- every step of a transaction not only performs the required action for that step, but it also defines a rollback action
+## Usefull links:
+### Microservices
+1. https://12factor.net/
+1. https://semver.org/
+1. https://keepachangelog.com/en/1.0.0/
 
-## Notes:
-1. The challenge is to strike the right balance between independent work and coordinated efforts
-2. Inverse Conway maneuver - addressing team coordination and team design at the beginning
+### Health-checks
+1. https://kubernetes.io/ru/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+1. https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-how-to-avoid-shooting-yourself-in-the-foot/
+
+### Gracefull shutdown
+1. https://pracucci.com/graceful-shutdown-of-kubernetes-pods.html
+1. https://itnext.io/containers-terminating-with-grace-d19e0ce34290
+
+### Metrics
+1. https://prometheus.io/docs/practices/instrumentation/

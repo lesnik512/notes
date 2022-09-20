@@ -1,15 +1,4 @@
-## Rootless containers
-
-```dockerfile
-FROM alpine:3.12
-# Create user and set ownership and permissions as required
-RUN adduser -D myuser && chown -R myuser /myapp-data
-# ... copy application files
-USER myuser
-ENTRYPOINT ["/myapp"]
-```
-
-## Multi-stage builds
+## Golang, multi-stage
 
 ```dockerfile
 #This is the "builder" stage
@@ -24,9 +13,24 @@ COPY --from=builder /my-go-app/app-service /bin/app-service
 ENTRYPOINT ["/bin/app-service"]
 ```
 
-## Distroless
+## Python
 
 ```dockerfile
-# for example, for golang binary
-FROM gcr.io/distroless/static-debian10
+FROM python:3.10-slim
+
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y curl \
+        locales \
+    && rm -rf /var/lib/apt/lists/*
+
+# RU Locale
+RUN sed -i -e 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen
+
+RUN pip3 install --no-cache-dir --upgrade pip \
+    poetry
+
+RUN useradd --no-create-home --gid root runner
+
 ```
