@@ -1,3 +1,4 @@
+# macos fresh install
 ## Fresh install
 1. Install [homebrew](https://brew.sh/)
 2. Install xcode
@@ -10,7 +11,7 @@ xcode-select --install
 brew install --cask iterm2 visual-studio-code appcleaner
 ```
 
-## Optional Software
+## macos software
 - [Beekeeper Studio Community Edition](https://github.com/beekeeper-studio/beekeeper-studio/releases/tag/v3.9.18) - free DB manager
 - [Moockoon](https://mockoon.com/) - creating mocks
 - [OpenLens](https://github.com/MuhammedKalkan/OpenLens) - IDE for k8s
